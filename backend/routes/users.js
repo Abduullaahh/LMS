@@ -19,6 +19,16 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// Get user by role
+router.get('/role/:role', (req, res) => {
+    console.log('i was here')
+    const { role } = req.params;
+    connection.query('SELECT * FROM Users WHERE role = ?', [role], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(result);
+    });
+});
+
 // Create a new user
 router.post('/', (req, res) => {
     const { username, password, email, role } = req.body;

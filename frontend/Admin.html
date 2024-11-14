@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-image: url('sincerely-media-qYsmxkxZtbM-unsplash.jpg'); /* Neutral background */
+            background-image: url('sincerely-media-qYsmxkxZtbM-unsplash.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -44,8 +44,8 @@
             font-size: 18px;
             transition: background 0.3s ease;
         }
-        .sidebar a:hover {
-            background-color: rgba(26, 188, 156, 0.8); /* Aqua shade */
+        .sidebar a:hover, .sidebar a.active {
+            background-color: rgba(26, 188, 156, 0.8);
         }
         .content {
             margin-left: 240px;
@@ -55,7 +55,7 @@
         .content h1 {
             text-align: center;
             font-size: 32px;
-            color: white; /* Light color for the welcome message */
+            color: white;
         }
         .welcome-img {
             display: block;
@@ -67,26 +67,87 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .dashboard-card {
-            background-color: rgba(255, 255, 255, 0.85); /* Lighter overlay */
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             margin: 20px 0;
             border-radius: 10px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
         }
         .dashboard-card h3 {
             font-size: 24px;
-            color: #2c3e50; /* Darker shade */
-            margin: 0;
+            color: #2c3e50;
+            margin: 0 0 15px 0;
         }
-        .dashboard-card p {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .action-buttons button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        form input, form select {
+            padding: 5px;
             font-size: 16px;
-            color: #777;
-            margin-top: 10px;
+        }
+        form button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -96,29 +157,268 @@
     </div>
 
     <div class="sidebar">
-        <a href="#manage-students">Manage Students</a>
-        <a href="#manage-instructors">Manage Instructors</a>
-        <a href="#manage-courses">Manage Courses</a>
+        <a href="#" onclick="showSection('welcome')">Welcome</a>
+        <a href="#" onclick="showSection('manage-students')">Manage Students</a>
+        <a href="#" onclick="showSection('manage-instructors')">Manage Instructors</a>
+        <a href="#" onclick="showSection('manage-courses')">Manage Courses</a>
     </div>
 
     <div class="content">
-        <h1>Welcome, Admin!</h1>
-        <!-- Admin welcome picture -->
-        <img src="Admin-1.png" 
-        alt="Welcome Admin" class="welcome-img">
+        <div id="welcome-section">
+            <h1>Welcome, Admin!</h1>
+            <img src="Admin-1.png" alt="Welcome Admin" class="welcome-img">
+        </div>
 
-        <div class="dashboard-card">
-            <h3>Manage Students</h3>
-            <p>Add, edit, or remove student records efficiently.</p>
+        <div id="manage-students-section" style="display: none;">
+            <div class="dashboard-card">
+                <h3>Manage Students</h3>
+                <button onclick="openModal('student')">Add New Student</button>
+                <table id="students-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
-        <div class="dashboard-card">
-            <h3>Manage Instructors</h3>
-            <p>Assign and manage instructors for various courses.</p>
+
+        <div id="manage-instructors-section" style="display: none;">
+            <div class="dashboard-card">
+                <h3>Manage Instructors</h3>
+                <button onclick="openModal('instructor')">Add New Instructor</button>
+                <table id="instructors-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
-        <div class="dashboard-card">
-            <h3>Manage Courses</h3>
-            <p>Handle course creation, updates, and student enrollments.</p>
+
+        <div id="manage-courses-section" style="display: none;">
+            <div class="dashboard-card">
+                <h3>Manage Courses</h3>
+                <button onclick="openModal('course')">Add New Course</button>
+                <table id="courses-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Course Name</th>
+                            <th>Description</th>
+                            <th>Instructor ID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <form id="modal-form">
+                <input type="hidden" id="form-id">
+                <input type="text" id="form-username" placeholder="Username">
+                <input type="email" id="form-email" placeholder="Email">
+                <input type="password" id="form-password" placeholder="Password">
+                <select id="form-role" style="display: none;">
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                </select>
+                <input type="text" id="form-course-name" placeholder="Course Name" style="display: none;">
+                <textarea id="form-course-description" placeholder="Course Description" style="display: none;"></textarea>
+                <input type="number" id="form-instructor-id" placeholder="Instructor ID" style="display: none;">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'welcome';
+        let currentAction = '';
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalForm = document.getElementById('modal-form');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        function showSection(sectionId) {
+            document.getElementById(currentSection + '-section').style.display = 'none';
+            document.getElementById(sectionId + '-section').style.display = 'block';
+            currentSection = sectionId;
+
+            // Remove 'active' class from all sidebar links
+            document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+            // Add 'active' class to the clicked link
+            event.target.classList.add('active');
+
+            if (sectionId !== 'welcome') {
+                fetchData(sectionId);
+            }
+        }
+
+        function openModal(type, id = null) {
+            currentAction = id ? 'edit' : 'add';
+            modalTitle.textContent = `${currentAction.charAt(0).toUpperCase() + currentAction.slice(1)} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            
+            // Reset and show/hide form fields based on type
+            document.getElementById('form-id').value = id || '';
+            document.getElementById('form-username').style.display = type !== 'course' ? 'block' : 'none';
+            document.getElementById('form-email').style.display = type !== 'course' ? 'block' : 'none';
+            document.getElementById('form-password').style.display = currentAction === 'add' && type !== 'course' ? 'block' : 'none';
+            document.getElementById('form-role').style.display = type !== 'course' ? 'block' : 'none';
+            document.getElementById('form-course-name').style.display = type === 'course' ? 'block' : 'none';
+            document.getElementById('form-course-description').style.display = type === 'course' ? 'block' : 'none';
+            document.getElementById('form-instructor-id').style.display = type === 'course' ? 'block' : 'none';
+
+            if (id) {
+                // Fetch data for editing
+                fetch(`localhost:4000http://localhost:4000/api/${type}s/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (type === 'course') {
+                            document.getElementById('form-course-name').value = data.course_name;
+                            document.getElementById('form-course-description').value = data.course_description;
+                            document.getElementById('form-instructor-id').value = data.instructor_id;
+                        } else {
+                            document.getElementById('form-username').value = data.username;
+                            document.getElementById('form-email').value = data.email;
+                            document.getElementById('form-role').value = data.role;
+                        }
+                    });
+            }
+
+            modal.style.display = 'block';
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        modalForm.onsubmit = function(e) {
+            e.preventDefault();
+            const formData = new FormData(modalForm);
+            const data = Object.fromEntries(formData.entries());
+            
+            let url, method;
+            if (currentSection === 'manage-courses') {
+                url = 'localhost:4000http://localhost:4000/api/courses';
+                method = currentAction === 'add' ? 'POST' : 'PUT';
+                if (method === 'PUT') url += `/${data.id}`;
+            } else {
+                url = 'localhost:4000http://localhost:4000/api/users';
+                method = currentAction === 'add' ? 'POST' : 'PUT';
+                if (method === 'PUT') url += `/${data.id}`;
+                data.role = currentSection === 'manage-students' ? 'student' : 'instructor';
+            }
+
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+                modal.style.display = 'none';
+                fetchData(currentSection);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
+        function fetchData(section) {
+            let url;
+            if (section === 'manage-courses') {
+                url = 'http://localhost:4000/api/courses';
+            } else if (section === 'manage-students') {
+                url = 'http://localhost:4000/api/users?role=student';
+            } else if (section === 'manage-instructors') {
+                url = 'http://localhost:4000/api/users?role=instructor';
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector(`#${section}-table tbody`);
+                    tableBody.innerHTML = '';  // Clear existing rows
+
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        
+                        if (section === 'manage-courses') {
+                            row.innerHTML = `
+                                <td>${item.id}</td>
+                                <td>${item.course_name}</td>
+                                <td>${item.course_description}</td>
+                                <td>${item.instructor_id}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button onclick="openModal('course', ${item.id})">Edit</button>
+                                        <button onclick="deleteItem('course', ${item.id})">Delete</button>
+                                    </div>
+                                </td>
+                            `;
+                        } else {
+                            row.innerHTML = `
+                                <td>${item.id}</td>
+                                <td>${item.username}</td>
+                                <td>${item.email}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button onclick="openModal('${section === 'manage-students' ? 'student' : 'instructor'}', ${item.id})">Edit</button>
+                                        <button onclick="deleteItem('${section === 'manage-students' ? 'student' : 'instructor'}', ${item.id})">Delete</button>
+                                    </div>
+                                </td>
+                            `;
+                        }
+
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        function deleteItem(type, id) {
+            const url = `http://localhost:4000/api/${type}s/${id}`;
+            fetch(url, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Deleted:', result);
+                fetchData(currentSection);  // Reload data
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error);
+            });
+        }
+
+        // Initialize the dashboard
+        showSection('welcome');
+    </script>
 </body>
 </html>
