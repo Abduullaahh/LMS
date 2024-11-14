@@ -1,10 +1,28 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const mysql = require('mysql2');
 const app = express();
 
-// Database module
-const db = require('./db');
+// Setup MySQL connection
+const connection = mysql.createConnection({
+    host: 'localhost',
+    database: 'universitydb',
+    user: 'root',
+    password: '1234',
+    port: 3306
+});
+
+// Check the database connection
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to database:', err.code);
+        console.error('Error details:', err);
+        process.exit(1);
+    }
+    console.log('Connected to database successfully');
+});
+module.exports = connection;
 
 // Import routes
 const usersRoute = require('./routes/users');
@@ -30,8 +48,15 @@ app.use('/api/grades', gradesRoute);
 app.use('/api/reports', reportsRoute);
 
 // Health check route
-app.get('/health', (req, res) => {
-    res.json({ status: 'OK' });
+app.get('/', (req, res) => {
+    connection.query('SELECT 1', (err, results) => {
+        if (err) {
+            console.error('Error in health check:', err);
+            res.status(500).json({ status: 'Error', error: err.message });
+            return;
+        }
+        res.json({ status: 'OK', database: 'Connected' });
+    });
 });
 
 // Error handling middleware
@@ -41,7 +66,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

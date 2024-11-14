@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const connection = require('../server');
 
 // Get all enrollments
 router.get('/', (req, res) => {
-    db.runQuery('SELECT * FROM Enrollments', [], (err, results) => {
+    connection.query('SELECT * FROM Enrollments', [], (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
     });
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 // Get enrollment by ID
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    db.runQuery('SELECT * FROM Enrollments WHERE enrollment_id = ?', [id], (err, result) => {
+    connection.query('SELECT * FROM Enrollments WHERE enrollment_id = ?', [id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(result);
     });
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
 // Enroll a student in a course
 router.post('/', (req, res) => {
     const { student_id, course_id } = req.body;
-    db.runQuery('INSERT INTO Enrollments (student_id, course_id) VALUES (?, ?)', [student_id, course_id], (err) => {
+    connection.query('INSERT INTO Enrollments (student_id, course_id) VALUES (?, ?)', [student_id, course_id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Student enrolled' });
     });
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const { student_id, course_id } = req.body;
-    db.runQuery('UPDATE Enrollments SET student_id = ?, course_id = ? WHERE enrollment_id = ?', [student_id, course_id, id], (err) => {
+    connection.query('UPDATE Enrollments SET student_id = ?, course_id = ? WHERE enrollment_id = ?', [student_id, course_id, id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Enrollment updated' });
     });
@@ -41,7 +41,7 @@ router.put('/:id', (req, res) => {
 // Delete enrollment
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
-    db.runQuery('DELETE FROM Enrollments WHERE enrollment_id = ?', [id], (err) => {
+    connection.query('DELETE FROM Enrollments WHERE enrollment_id = ?', [id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Enrollment deleted' });
     });
