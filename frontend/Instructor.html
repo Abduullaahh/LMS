@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor's Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('pawel-czerwinski-848z7lbCjoo-unsplash.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .navbar {
+            background-color: rgba(0, 85, 82, 0.866); 
+            padding: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .sidebar {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding-top: 30px;
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+            color: white;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: rgba(26, 188, 156, 0.8); /* Aqua shade */
+        }
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+            color: #333;
+        }
+        .content h1 {
+            text-align: center;
+            font-size: 32px;
+            color: white; /* Changed to white */
+        }
+        .dashboard-card {
+            background-color: rgba(255, 255, 255, 0.85); /* Lighter overlay */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-card h3 {
+            font-size: 24px;
+            color: #34495e; /* Darker blue-grey */
+            margin: 0;
+        }
+        .dashboard-card p {
+            font-size: 16px;
+            color: #666666; /* Soft grey */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Instructor's Dashboard</h2>
+    </div>
+
+    <div class="sidebar">
+        <a href="#manage-courses">Manage Courses</a>
+        <a href="#enrolled-students">View Enrolled Students</a>
+        <a href="#attendance">Mark Attendance</a>
+        <a href="#grades">Manage Grades</a>
+        <a href="#reports">Reports</a>
+    </div>
+
+    <div class="content">
+        <h1>Welcome, Instructor!</h1>
+
+        <div class="dashboard-card">
+            <h3>Manage Courses</h3>
+            <p>Create, update, and manage courses you're responsible for.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Enrolled Students</h3>
+            <p>View and manage students enrolled in your courses.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Attendance</h3>
+            <p>Mark and track attendance for each student in your courses.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Manage Grades</h3>
+            <p>Input and update grades for students in each course.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Reports</h3>
+            <p>Generate and view performance and attendance reports.</p>
+        </div>
+    </div>
+</body>
+</html>

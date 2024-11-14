@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Add Course -->
+    <h2>Add a Course</h2>
+    <form id="add-course-form">
+        <label>Course Name: </label>
+        <input type="text" id="course-name" required>
+        <label>Instructor ID: </label>
+        <input type="number" id="instructor-id" required>
+        <button type="submit">Add Course</button>
+    </form>
+
+    <!-- View All Users -->
+    <h2>All Users</h2>
+    <button id="fetch-users">View All Users</button>
+    <div id="users-list"></div>
+
+    <!-- View All Courses -->
+    <h2>All Courses</h2>
+    <button id="fetch-courses">View All Courses</button>
+    <div id="courses-list"></div>
+
+    <script>
+        // Function to handle adding a new course
+        document.getElementById('add-course-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const courseName = document.getElementById('course-name').value;
+            const instructorId = document.getElementById('instructor-id').value;
+
+            const response = await fetch('/api/courses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    course_name: courseName,
+                    instructor_id: instructorId
+                })
+            });
+
+            if (response.ok) {
+                alert('Course added successfully!');
+            } else {
+                alert('Failed to add course.');
+            }
+        });
+
+        // Function to fetch all users
+        document.getElementById('fetch-users').addEventListener('click', async function() {
+            const response = await fetch('/api/users');
+            const users = await response.json();
+            let usersHtml = '<ul>';
+            users.forEach(user => {
+                usersHtml += `<li>${user.username} - ${user.role}</li>`;
+            });
+            usersHtml += '</ul>';
+            document.getElementById('users-list').innerHTML = usersHtml;
+        });
+
+        // Function to fetch all courses
+        document.getElementById('fetch-courses').addEventListener('click', async function() {
+            const response = await fetch('/api/courses');
+            const courses = await response.json();
+            let coursesHtml = '<ul>';
+            courses.forEach(course => {
+                coursesHtml += `<li>${course.course_name} - Instructor: ${course.instructor_id}</li>`;
+            });
+            coursesHtml += '</ul>';
+            document.getElementById('courses-list').innerHTML = coursesHtml;
+        });
+    </script>
+</body>
+</html>

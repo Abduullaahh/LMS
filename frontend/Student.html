@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('pawel-czerwinski-848z7lbCjoo-unsplash.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .navbar {
+            background-color: rgba(0, 85, 82, 0.866); 
+            padding: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .sidebar {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #34495e;
+            color: white;
+            padding-top: 30px;
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+            color: white;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #2980b9;
+        }
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        .content h1 {
+            text-align: center;
+            color: white; /* Light color for the welcome message */
+            font-size: 32px;
+        }
+        .welcome-img {
+            display: block;
+            margin: 20px auto;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-card {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-card h3 {
+            font-size: 24px;
+            color: #34495e;
+            margin: 0;
+        }
+        .dashboard-card p {
+            font-size: 16px;
+            color: #777;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Student Dashboard</h2>
+    </div>
+
+    <div class="sidebar">
+        <a href="#my-courses">My Courses</a>
+        <a href="#attendance">Attendance</a>
+        <a href="#grades">Grades</a>
+    </div>
+
+    <div class="content">
+        <h1>Welcome, Student!</h1>
+        <img src="Student.png" alt="Welcome Student" class="welcome-img"> 
+
+        <div class="dashboard-card">
+            <h3>My Courses</h3>
+            <p>View the list of courses you are enrolled in.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Attendance</h3>
+            <p>Check your attendance status for each course.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Grades</h3>
+            <p>View your grades for all completed and ongoing courses.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('LogIN.jpg'); /* Background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background image */
+            color: #34495e; /* Default text color */
+        }
+        .login-container {
+            width: 400px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+            color: #2c3e50; /* Darker color for the title */
+            font-size: 28px; /* Set a consistent font size */
+            font-weight: 600; /* Bold weight for title */
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #7f8c8d; /* Lighter color for subtitle */
+            font-size: 20px; /* Reduced font size for subtitle */
+            font-weight: 400; /* Normal weight for subtitle */
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold; /* Bold labels for emphasis */
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 20px;
+            border: 1px solid #bdc3c7; /* Soft border color */
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #3498db; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            font-weight: bold; /* Bold text for submit button */
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9; /* Darker shade on hover */
+        }
+        .forgot-password {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #34495e; /* Default color for the link */
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+        .icon-container {
+            margin-bottom: 15px;
+        }
+        .icon-container i {
+            font-size: 50px; /* Icon size */
+            color: #3498db; /* Icon color */
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #7f8c8d; /* Footer text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="icon-container">
+            <i class="fas fa-user-graduate"></i> <!-- Graduation icon -->
+        </div>
+        <h1>Student Management System</h1> <!-- Main heading -->
+        <h2>Login to Your Account</h2> <!-- Subheading -->
+        <form action="/login">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            
+            <input type="submit" value="Login">
+        </form>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+        <div class="footer">© 2024 Student Management System. All rights reserved.</div>
+    </div>
+</body>
+</html>
