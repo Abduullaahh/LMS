@@ -4,78 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('sincerely-media-qYsmxkxZtbM-unsplash.jpg'); /* Neutral background */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .navbar {
+            background-color: rgba(0, 85, 82, 0.866);
+            padding: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .sidebar {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding-top: 30px;
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+            color: white;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: rgba(26, 188, 156, 0.8); /* Aqua shade */
+        }
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+            color: #333;
+        }
+        .content h1 {
+            text-align: center;
+            font-size: 32px;
+            color: white; /* Light color for the welcome message */
+        }
+        .welcome-img {
+            display: block;
+            margin: 20px auto;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-card {
+            background-color: rgba(255, 255, 255, 0.85); /* Lighter overlay */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-card h3 {
+            font-size: 24px;
+            color: #2c3e50; /* Darker shade */
+            margin: 0;
+        }
+        .dashboard-card p {
+            font-size: 16px;
+            color: #777;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    <div class="navbar">
+        <h2>Admin Dashboard</h2>
+    </div>
 
-    <!-- Add Course -->
-    <h2>Add a Course</h2>
-    <form id="add-course-form">
-        <label>Course Name: </label>
-        <input type="text" id="course-name" required>
-        <label>Instructor ID: </label>
-        <input type="number" id="instructor-id" required>
-        <button type="submit">Add Course</button>
-    </form>
+    <div class="sidebar">
+        <a href="#manage-students">Manage Students</a>
+        <a href="#manage-instructors">Manage Instructors</a>
+        <a href="#manage-courses">Manage Courses</a>
+    </div>
 
-    <!-- View All Users -->
-    <h2>All Users</h2>
-    <button id="fetch-users">View All Users</button>
-    <div id="users-list"></div>
+    <div class="content">
+        <h1>Welcome, Admin!</h1>
+        <!-- Admin welcome picture -->
+        <img src="Admin-1.png" 
+        alt="Welcome Admin" class="welcome-img">
 
-    <!-- View All Courses -->
-    <h2>All Courses</h2>
-    <button id="fetch-courses">View All Courses</button>
-    <div id="courses-list"></div>
-
-    <script>
-        // Function to handle adding a new course
-        document.getElementById('add-course-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const courseName = document.getElementById('course-name').value;
-            const instructorId = document.getElementById('instructor-id').value;
-
-            const response = await fetch('/api/courses', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    course_name: courseName,
-                    instructor_id: instructorId
-                })
-            });
-
-            if (response.ok) {
-                alert('Course added successfully!');
-            } else {
-                alert('Failed to add course.');
-            }
-        });
-
-        // Function to fetch all users
-        document.getElementById('fetch-users').addEventListener('click', async function() {
-            const response = await fetch('/api/users');
-            const users = await response.json();
-            let usersHtml = '<ul>';
-            users.forEach(user => {
-                usersHtml += `<li>${user.username} - ${user.role}</li>`;
-            });
-            usersHtml += '</ul>';
-            document.getElementById('users-list').innerHTML = usersHtml;
-        });
-
-        // Function to fetch all courses
-        document.getElementById('fetch-courses').addEventListener('click', async function() {
-            const response = await fetch('/api/courses');
-            const courses = await response.json();
-            let coursesHtml = '<ul>';
-            courses.forEach(course => {
-                coursesHtml += `<li>${course.course_name} - Instructor: ${course.instructor_id}</li>`;
-            });
-            coursesHtml += '</ul>';
-            document.getElementById('courses-list').innerHTML = coursesHtml;
-        });
-    </script>
+        <div class="dashboard-card">
+            <h3>Manage Students</h3>
+            <p>Add, edit, or remove student records efficiently.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Manage Instructors</h3>
+            <p>Assign and manage instructors for various courses.</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Manage Courses</h3>
+            <p>Handle course creation, updates, and student enrollments.</p>
+        </div>
+    </div>
 </body>
 </html>
